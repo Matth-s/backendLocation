@@ -4,7 +4,32 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const serviceAccount = {
-  type: process.env.FIREBASE_TYPE,
+  type: "service_account",
+  project_id: "test-62e62",
+  private_key_id: "d2bc5094938ea94642ca40d23b0f35ca012e1c5d",
+  private_key:
+    "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCjpHbi0N1pjvaF\njvj5RxyLuPuVDC9tQ856ezMGWNQSxO1w2rxZZGEl0NRLs4SsfL+ZT/y4tEcnZl8M\nZ1fogIgH4nSyaHSKzHgLIRupHs8DFev6gL1m5AJ9QYVgnDsKs2QROPQXDIhMqBH2\n2hFv5u61rgW1wQ5L1abVsqd3nVkd0YVEhdEV+ROvY51lG+5VdmrZ8lEcF/3LfsYW\nS6IMzgKwDSqm3sBUrMFnd9h4LHZut+ID4hgpxXz0HUgIp3xX/QfO7VoaNsfaOjDw\nH2ejDg2wXHXEPdd3IiYrHzClyvbKJXaZAaxU39Ghp11HIhQOd3oA4elLG6FTKEqt\nl9qKDOmbAgMBAAECggEABSAR3NqZhevsqtj6R5vSQfuUmU4pUczsVgLz9T4CXwQf\nB/50TArpud3KEj/6+pIu5XJeC/X+b5jbriqKwHZhLsfh3y50f149m6fvWACrBZ9B\n1vqzG1CkkNrRHCU00vY0oV4TSYHT5ren83V3yWuZ5SY0A0Wazy08CumzYzXXBtop\nbKL5geWDbwI8K72NPkhJ5Tbw5lZiFD0YSWK0iNC7NZzzl72dfv0VNRwS/pMY2KNn\nqcuqHvGMld4g9mKm5C1qErbzG3hRCIWhFkeHMXF+1PKQpz82Pd12CulMwQfEUpNb\nJzedV2/JENkbVVteyaeSjNJhZiPTaBvcF7UE69tNYQKBgQDkEQdcuI1TaEKVpzoF\nesWejoayCGc9sOUC2PKq9/sJs8ueUH7t4NIDjQbgSl28sMH7ULAtRECz3ee9XD0h\nq0oOZS1t+sYopJxTPP8myK3BKsi6Y608wDjROjG1oHRxZXyl75I9/z6yFnG0umL4\n0sXKFpEV6RI7qNRWi4/2uHu07QKBgQC3r28bEpi22WYECqXiKMjgGbxKamRyfVPa\nwt1tOJ+pfKOPqpxDFbSv/rzcwXuGH0ln83Eht1s1EfTVcNQmBDudpGmogt1kC6+f\n9zQQJihj+KSlxrxvVNykI6BZnNDsGYXU6FUJOCuYMVU36zIZL8WnsTZ0Jd2IjnGr\nUA6uQMAPpwKBgFGYQhELOgzINWJDVP/W39MNXOVfGki4/AYbxh4i4F6lQ8kdNXw3\nvgtlLjuaf5TdjFk0kgNv8tInJxzZXkmodbNWwX0ihjjOQ9uH7CVdEMUWYIBG3xjo\nEKvSbSx0/pP/Yiwf3StvIWgnnYCyWmx5RCg8EKZNH6fWjDl2bwgvEps1AoGAULEa\nx/PVbo32SNQ8pytvgzMLCk3OrpTr33A3QaHcUeJVH+m9F6NTavUnFntQvkzEPIwv\nKLaZtKicu58DM2gsoEX3vHUwuKCBmG5KSsXYfIJgIgs6AFZxTxHvgS5ogS99IVim\n8pPgYs1ZOGVz7qiT1eT9nOx9c13QBYf3ywja1oUCgYAxOcStQ7yCNS237Pc12d6E\n0ewwx+4S/uZs8kSETVribM7vuL+qIzwURigcpNPHBcrg1jLa9rSV9IHKKH4YR4Qm\nzS+FWD2+PzPygXGjCd21XNr3SFYJ50owTsV8yy3amy0mlppxAGX8kQ02cGkQG/5t\nEFkEIgyOCplHZTnuluX72g==\n-----END PRIVATE KEY-----\n".replace(
+      /\\n/g,
+      "\n"
+    ),
+  client_email: "firebase-adminsdk-az1p0@test-62e62.iam.gserviceaccount.com",
+  client_id: "112184461419394697931",
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url:
+    "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-az1p0%40test-62e62.iam.gserviceaccount.com",
+  universe_domain: "googleapis.com",
+};
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_DATA_BASE_URL_HTTP,
+});
+
+module.exports = admin;
+
+/* type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
   private_key:
@@ -18,12 +43,4 @@ const serviceAccount = {
   token_uri: process.env.FIREBASE_TOKEN_URI,
   auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-  databaseURL: process.env.FIREBASE_DATABASE_URL,
-};
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.FIREBASE_DATA_BASE_URL_HTTP,
-});
-
-module.exports = admin;
+  databaseURL: process.env.FIREBASE_DATABASE_URL, */
