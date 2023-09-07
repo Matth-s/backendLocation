@@ -1,6 +1,8 @@
 const admin = require("../db/config");
 const { v4: uuidv4 } = require("uuid");
+const verifyToken = require("../middleware/decodeToken");
 
+//get
 exports.getAllData = async (req, res, next) => {
   try {
     const firestore = admin.firestore();
@@ -19,30 +21,7 @@ exports.getAllData = async (req, res, next) => {
   }
 };
 
-exports.postMaterial = async (req, res) => {
-  const { material } = req.body;
-
-  try {
-    const firestore = admin.firestore();
-    const collectionRef = firestore.collection("material");
-
-    const querySnapshot = await collectionRef.get();
-
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-
-      if (data.id === material.id) {
-        material.id = uuidv4();
-      }
-    });
-
-    await collectionRef.doc(material.id).set(material);
-
-    res.status(201).json(material);
-  } catch (error) {
-    res.status(400).json({ message: error });
-  }
-};
+//get by id
 
 exports.getDataById = async (req, res, next) => {
   const { id } = req.params;
@@ -72,8 +51,58 @@ exports.getDataById = async (req, res, next) => {
   }
 };
 
+//post
+exports.postMaterial = async (req, res) => {
+  const { material } = req.body;
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res.status(401).json("Unauthorized");
+  }
+
+  const checkToken = await verifyToken(authorization);
+
+  if (!checkToken) {
+    return res.status(401).json("Unauthorized");
+  }
+
+  try {
+    const firestore = admin.firestore();
+    const collectionRef = firestore.collection("material");
+
+    const querySnapshot = await collectionRef.get();
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+
+      if (data.id === material.id) {
+        material.id = uuidv4();
+      }
+    });
+
+    await collectionRef.doc(material.id).set(material);
+
+    res.status(201).json(material);
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};
+
+//delete by id
 exports.deleteDataById = async (req, res, next) => {
   const { id } = req.params;
+
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res.status(401).json("Unauthorized");
+  }
+
+  const checkToken = await verifyToken(authorization);
+
+  if (!checkToken) {
+    return res.status(401).json("Unauthorized");
+  }
 
   try {
     const firestore = admin.firestore();
@@ -96,9 +125,22 @@ exports.deleteDataById = async (req, res, next) => {
   }
 };
 
+//update
 exports.updateMaterial = async (req, res) => {
   const { id } = req.params;
   const { material } = req.body;
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res.status(401).json("Unauthorized");
+  }
+
+  const checkToken = await verifyToken(authorization);
+
+  if (!checkToken) {
+    return res.status(401).json("Unauthorized");
+  }
+
   try {
     const firestore = admin.firestore();
     const collectionRef = firestore.collection("material");
