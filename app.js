@@ -1,9 +1,6 @@
 const express = require("express");
 const MaterialRoute = require("./routes/material.js");
-const ImageRoute = require("./routes/image.js");
 const app = express();
-
-// Enable CORS (Cross-Origin Resource Sharing)
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -21,6 +18,5 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use("/api/material", MaterialRoute);
-app.use("/api/image", ImageRoute);
 
 module.exports = app;

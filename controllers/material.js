@@ -8,7 +8,9 @@ exports.getAllData = async (req, res, next) => {
     const data = [];
 
     querySnapshot.forEach((doc) => {
-      data.push(doc.data());
+      if (doc.data().visible) {
+        data.push(doc.data());
+      }
     });
 
     res.status(200).json(data);
