@@ -2,6 +2,9 @@ const admin = require("../db/config");
 const { v4: uuidv4 } = require("uuid");
 const verifyToken = require("../middleware/decodeToken");
 
+const { material } = require("../schema/Joi");
+const { isSchema } = require("joi");
+
 //get
 exports.getAllData = async (req, res, next) => {
   try {
