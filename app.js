@@ -7,7 +7,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "http://localhost:3001"],
+      scriptSrc: ["'self'", "http://localhost:3000"],
     },
   })
 );
