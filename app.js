@@ -2,7 +2,7 @@ const express = require("express");
 const MaterialRoute = require("./routes/material.js");
 const app = express();
 const helmet = require("helmet");
-
+/*
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -11,7 +11,7 @@ app.use(
     },
   })
 );
-
+*/
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
