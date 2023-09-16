@@ -1,5 +1,6 @@
 const express = require("express");
 const MaterialRoute = require("./routes/material.js");
+const BookingRoute = require("./routes/booking.js");
 const app = express();
 const helmet = require("helmet");
 
@@ -28,5 +29,5 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use("/api/material", MaterialRoute);
-
+app.use("/api/booking", BookingRoute);
 module.exports = app;

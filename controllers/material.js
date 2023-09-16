@@ -1,10 +1,7 @@
 const admin = require("../db/config");
 const { v4: uuidv4 } = require("uuid");
 const verifyToken = require("../middleware/decodeToken");
-
-const { material } = require("../schema/Joi");
-const { isSchema } = require("joi");
-
+const crypto = require("crypto");
 //get
 exports.getAllData = async (req, res, next) => {
   try {
@@ -13,14 +10,12 @@ exports.getAllData = async (req, res, next) => {
     const data = [];
 
     querySnapshot.forEach((doc) => {
-      if (doc.data().visible) {
-        data.push(doc.data());
-      }
+      data.push(doc.data());
     });
 
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 };
 
