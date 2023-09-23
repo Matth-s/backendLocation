@@ -1,7 +1,7 @@
 const admin = require("../db/config");
 const { v4: uuidv4 } = require("uuid");
 const verifyToken = require("../middleware/decodeToken");
-const crypto = require("crypto");
+
 //get
 exports.getAllData = async (req, res, next) => {
   try {
@@ -20,7 +20,6 @@ exports.getAllData = async (req, res, next) => {
 };
 
 //get by id
-
 exports.getDataById = async (req, res, next) => {
   const { id } = req.params;
 
@@ -105,6 +104,7 @@ exports.deleteDataById = async (req, res, next) => {
   try {
     const firestore = admin.firestore();
     const collectionRef = firestore.collection("material");
+    const bookingRef = firestore.collection("bookings");
 
     const querySnapshot = await collectionRef.where("id", "==", id).get();
 
